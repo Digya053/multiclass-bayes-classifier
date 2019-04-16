@@ -1,7 +1,5 @@
 import sys
-
 import numpy as np
-
 
 def class_priors(y_train, counts):
     prior = []
@@ -9,7 +7,6 @@ def class_priors(y_train, counts):
     for i in counts:
         prior.append(i / total)
     return prior
-
 
 def class_conditional_density(X_train, y_train, k_classes, counts):
     mean = []
@@ -20,7 +17,6 @@ def class_conditional_density(X_train, y_train, k_classes, counts):
         covariance.append(np.dot(
             (X_train[l_class] - mean[-1]).T, (X_train[l_class] - mean[-1])) / len(X_train[l_class]))
     return mean, covariance
-
 
 def pluginClassifier(X_train, y_train, X_test):
     k_classes, counts = np.unique(y_train, return_counts=True)
@@ -40,7 +36,6 @@ def pluginClassifier(X_train, y_train, X_test):
     posterior_prob = posterior_prob / s
     return posterior_prob
 
-
 def main():
     X_train = np.genfromtxt(sys.argv[1], delimiter=",")
     y_train = np.genfromtxt(sys.argv[2])
@@ -50,7 +45,6 @@ def main():
 
     y = final_outputs.argmax(1)
     np.savetxt("probs_test.csv", final_outputs, delimiter=",")
-
 
 if __name__ == "__main__":
     main()
